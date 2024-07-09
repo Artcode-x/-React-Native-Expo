@@ -12,6 +12,7 @@ import {
 
 import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
+import { Joke } from "./components/Joke/Joke"
 
 export const Main = () => {
   const [name, setName] = useState()
@@ -50,10 +51,10 @@ export const Main = () => {
         // далее указываем что будем обновлять:
         onRefresh={fetchPromise}
         data={data}
-        renderItem={({ item }) => <Text>{item.value}</Text>}
-        keyExtractor={(item) => item.id}
+        // было: renderItem={({ item }) => <Text>{item.value}</Text>}
+        renderItem={({ item }) => <Joke text={item.value} />}
       />
-
+      {/* keyExtractor={(item) => item.id} */}
       <Text style={styles.text}>Hello World!</Text>
       <TextInput
         value={name}
