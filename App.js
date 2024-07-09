@@ -1,5 +1,14 @@
 import { StatusBar } from "expo-status-bar"
-import { ActivityIndicator, Alert, FlatList, Keyboard, Text, TextInput, View } from "react-native"
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Keyboard,
+  Text,
+  TextInput,
+  View,
+  RefreshControl,
+} from "react-native"
 import { styles } from "./App.css"
 import { useEffect, useState } from "react"
 
@@ -8,13 +17,18 @@ export default function App() {
   const [data, setData] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  // ф-ия создается как раз для возможности применения RefreshControl
+  const fetchPromise = () => {
     setIsLoading(true)
     fetch("https://api.chucknorris.io/jokes/search?query=fet")
       .then((res) => res.json())
       .then((res) => setData(res.result))
       .catch((err) => alert(err))
       .finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    fetchPromise()
   }, [])
 
   // console.log(data)
@@ -32,6 +46,10 @@ export default function App() {
       {/* Flatlist - используется для вывода контента со скроллом / Предоставляет интерфейс для вывода списков */}
       {/* renderItem - используется аналогично методу map, пишем туда выводимые данные*/}
       <FlatList
+        // указываем флаг с пом-ю которого refreshcontrol понимает показывать или нет наши данные
+        refreshing={isLoading}
+        // далее указываем что будем обновлять:
+        onRefresh={fetchPromise}
         data={data}
         renderItem={({ item }) => <Text>{item.value}</Text>}
         keyExtractor={(item) => item.id}
