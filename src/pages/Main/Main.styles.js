@@ -19,4 +19,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  button: {
+    paddingBottom: 40,
+  },
 })

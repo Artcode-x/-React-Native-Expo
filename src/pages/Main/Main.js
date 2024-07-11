@@ -15,7 +15,8 @@ import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
 
-export const Main = () => {
+// вместо хука реакта useNavigate, пишем navigation
+export const Main = ({ navigation }) => {
   const [name, setName] = useState()
   const [data, setData] = useState()
   const [isLoading, setIsLoading] = useState(true)
@@ -43,10 +44,17 @@ export const Main = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
+        <Button
+          style={styles.button}
+          title="Перейти на страницу о нас"
+          //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге
+          onPress={() => navigation.navigate("AboutScreen")}
+        />
         {/* ActivityIndicator - индикатор загрузки */}
         <ActivityIndicator size={"large"} color={"wheat"} />
         {/* Flatlist - используется для вывода контента со скроллом / Предоставляет интерфейс для вывода списков */}
         {/* renderItem - используется аналогично методу map, пишем туда выводимые данные*/}
+
         <FlatList
           // указываем флаг с пом-ю которого refreshcontrol понимает показывать или нет наши данные
           refreshing={isLoading}
