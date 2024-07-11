@@ -11,4 +11,12 @@ export const styles = StyleSheet.create({
   text: {
     color: "red",
   },
+
+  wrapper: {
+    flex: 1,
+    paddingTop: 40,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 })
