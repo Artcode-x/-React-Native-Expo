@@ -9,6 +9,7 @@ import {
   View,
   RefreshControl,
   Button,
+  TouchableOpacity,
 } from "react-native"
 
 import { styles } from "./Main.styles"
@@ -54,7 +55,6 @@ export const Main = ({ navigation }) => {
         <ActivityIndicator size={"large"} color={"wheat"} />
         {/* Flatlist - используется для вывода контента со скроллом / Предоставляет интерфейс для вывода списков */}
         {/* renderItem - используется аналогично методу map, пишем туда выводимые данные*/}
-
         <FlatList
           // указываем флаг с пом-ю которого refreshcontrol понимает показывать или нет наши данные
           refreshing={isLoading}
@@ -64,9 +64,16 @@ export const Main = ({ navigation }) => {
           data={data}
           // было: renderItem={({ item }) => <Text>{item.value}</Text>}
           // какой конкретно компонент мы должны отрисовать:
-          renderItem={({ item }) => <Joke text={item.value} navigation={navigation} id={item.id} />}
+          //   renderItem={({ item }) => <Joke text={item.value} navigation={navigation} id={item.id} />}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("JokeScreen", { id: item.id, title: item.created_at })}
+            >
+              <Joke text={item.value} />
+            </TouchableOpacity>
+          )}
         />
-
+        {/* // <Joke text={item.value} navigation={navigation} id={item.id} />} */}
         <Text style={styles.text}>Hello World!</Text>
         <TextInput
           value={name}
