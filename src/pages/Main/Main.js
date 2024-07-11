@@ -47,7 +47,7 @@ export const Main = ({ navigation }) => {
         <Button
           style={styles.button}
           title="Перейти на страницу о нас"
-          //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге
+          //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге = какая страница
           onPress={() => navigation.navigate("AboutScreen")}
         />
         {/* ActivityIndicator - индикатор загрузки */}
@@ -64,7 +64,7 @@ export const Main = ({ navigation }) => {
           data={data}
           // было: renderItem={({ item }) => <Text>{item.value}</Text>}
           // какой конкретно компонент мы должны отрисовать:
-          renderItem={({ item }) => <Joke text={item.value} />}
+          renderItem={({ item }) => <Joke text={item.value} navigation={navigation} id={item.id} />}
         />
 
         <Text style={styles.text}>Hello World!</Text>

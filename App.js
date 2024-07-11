@@ -2,6 +2,7 @@ import { Main } from "./src/pages/Main/Main"
 import { About } from "./src/pages/About/About"
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { NavigationContainer } from "@react-navigation/native"
+import { JokeScreen } from "./src/pages/JokeScreen/JokeScreen"
 
 export default function App() {
   // условно stack - это routes
@@ -13,6 +14,7 @@ export default function App() {
         {/* название страницы можно менять с пом-ю атрибута option */}
         <Stack.Screen name={"MainScreen"} component={Main} options={{ title: "Главная страница" }} />
         <Stack.Screen name={"AboutScreen"} component={About} options={{ title: "О Нас" }} />
+        <Stack.Screen name={"JokeScreen"} component={JokeScreen} options={{ title: "Шутка" }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
