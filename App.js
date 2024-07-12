@@ -1,21 +1,5 @@
-import { Main } from "./src/pages/Main/Main"
-import { About } from "./src/pages/About/About"
-import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { NavigationContainer } from "@react-navigation/native"
-import { JokeScreen } from "./src/pages/JokeScreen/JokeScreen"
+import { Routing } from "./src/pages/Routing/Routing"
 
 export default function App() {
-  // условно stack - это routes
-  const Stack = createNativeStackNavigator()
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* name - обязательный атрибут, условно наш путь/идентификатор для отображаемого компонента/ возм-но название стр-цы, и рядом указывается сам компонент который будет отображаться */}
-        {/* название страницы можно менять с пом-ю атрибута option */}
-        <Stack.Screen name={"MainScreen"} component={Main} options={{ title: "Главная страница" }} />
-        <Stack.Screen name={"AboutScreen"} component={About} options={{ title: "О Нас" }} />
-        <Stack.Screen name={"JokeScreen"} component={JokeScreen} options={{ title: "Шутка" }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+  return <Routing />
 }
