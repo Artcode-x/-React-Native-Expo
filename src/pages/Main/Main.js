@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, Text, TextInput, View, Button, TouchableOpacity } from "react-native"
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Keyboard,
+  Text,
+  TextInput,
+  View,
+  RefreshControl,
+  Button,
+  TouchableOpacity,
+} from "react-native"
 
 import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
 
+// вместо хука реакта useNavigate, пишем navigation
 export const Main = ({ navigation }) => {
   const [name, setName] = useState()
   const [data, setData] = useState()
@@ -23,6 +35,8 @@ export const Main = ({ navigation }) => {
     fetchPromise()
   }, [])
 
+  //   Alert.alert("Ошибка с сервера", "Текст ошибки")
+
   if (isLoading) {
     return (
       <ActivityIndicator size={"large"} style={{ flex: 1, justifyContent: "center", alignItems: "center" }} />
@@ -34,20 +48,22 @@ export const Main = ({ navigation }) => {
         <Button
           style={styles.button}
           title="Перейти на страницу о нас"
+          //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге = какая страница
           onPress={() => navigation.navigate("AboutScreen")}
         />
+        {/* ActivityIndicator - индикатор загрузки */}
         <ActivityIndicator size={"large"} color={"wheat"} />
+        {/* Flatlist - используется для вывода контента со скроллом / Предоставляет интерфейс для вывода списков */}
+        {/* renderItem - используется аналогично методу map, пишем туда выводимые данные*/}
         <FlatList
+          // указываем флаг с пом-ю которого refreshcontrol понимает показывать или нет наши данные
           refreshing={isLoading}
+          // далее указываем что будем обновлять:
           onRefresh={fetchPromise}
           keyExtractor={(item) => item.id}
           data={data}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("JokeScreen", { id: item.id, title: item.created_at })}
-            >
-              <Joke text={item.value} />
-            </TouchableOpacity>
+            <Joke text={item.value} navigation={navigation} id={item.id} title={item.created_at} />
           )}
         />
         <Text style={styles.text}>Hello World!</Text>
