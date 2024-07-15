@@ -3,20 +3,17 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  Keyboard,
   Text,
   TextInput,
   View,
   RefreshControl,
   Button,
-  TouchableOpacity,
 } from "react-native"
 
 import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
 
-// вместо хука реакта useNavigate, пишем navigation
 export const Main = ({ navigation }) => {
   const [name, setName] = useState()
   const [data, setData] = useState()
@@ -27,15 +24,13 @@ export const Main = ({ navigation }) => {
     fetch("https://api.chucknorris.io/jokes/search?query=fet")
       .then((res) => res.json())
       .then((res) => setData(res.result))
-      .catch((err) => alert(err))
+      .catch((err) => Alert.alert("Ошибка с сервера", "Попробуйте выполнить запрос позднее"))
       .finally(() => setIsLoading(false))
   }
 
   useEffect(() => {
     fetchPromise()
   }, [])
-
-  //   Alert.alert("Ошибка с сервера", "Текст ошибки")
 
   if (isLoading) {
     return (
