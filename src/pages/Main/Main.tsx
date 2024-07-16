@@ -13,9 +13,15 @@ import {
 import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
+import { IData, INavigationProps } from "../../interface/interface"
+// import { NavigationParams } from "@react-navigation/native"
 
-export const Main = ({ navigation }) => {
-  const [name, setName] = useState()
+import { NavigationProp } from "@react-navigation/native"
+
+type PageName = "AboutScreen"
+
+export const Main = ({ navigation }: INavigationProps) => {
+  const [name, setName] = useState<string>()
   const [data, setData] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
@@ -37,14 +43,19 @@ export const Main = ({ navigation }) => {
       <ActivityIndicator size={"large"} style={{ flex: 1, justifyContent: "center", alignItems: "center" }} />
     )
   }
+  console.log(data)
+  const onPressHandler = (pageName: PageName) => {
+    navigation.navigate(pageName)
+  }
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Button
-          style={styles.button}
+          // style={styles.button}
           title="Перейти на страницу о нас"
           //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге = какая страница
-          onPress={() => navigation.navigate("AboutScreen")}
+          onPress={() => onPressHandler("AboutScreen")}
         />
         {/* ActivityIndicator - индикатор загрузки */}
         <ActivityIndicator size={"large"} color={"wheat"} />
@@ -69,9 +80,7 @@ export const Main = ({ navigation }) => {
           keyboardType={"numeric"}
         />
         <StatusBar style="auto" />
-        <Button title={"Нажми на меня"} onPress={() => console.log("test")}>
-          Нажми на меня
-        </Button>
+        <Button title="Нажми на меня" onPress={() => console.log("test")} />
       </View>
     </View>
   )

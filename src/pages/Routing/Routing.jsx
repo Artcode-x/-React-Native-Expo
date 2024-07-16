@@ -1,8 +1,8 @@
-import { Main } from "../../../src/pages/Main/Main"
-import { About } from "../../../src/pages/About/About"
+import { Main } from "../Main/Main"
+import { About } from "../About/About"
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { NavigationContainer } from "@react-navigation/native"
-import { JokeScreen } from "../../../src/pages/JokeScreen/JokeScreen"
+import { JokeScreen } from "../JokeScreen/JokeScreen"
 
 export const Routing = () => {
   // условно stack - это routes

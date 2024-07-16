@@ -1,6 +1,8 @@
+import { RouteProp } from "@react-navigation/native"
 import { Text, View } from "react-native"
+import { IRoute } from "../../interface/interface"
 
-export const JokeScreen = ({ route }) => {
+export const JokeScreen = ({ route }: IRoute) => {
   const { id, title } = route.params
   return (
     <View>
