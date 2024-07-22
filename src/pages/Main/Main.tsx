@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, Text, TextInput, View, Button, TouchableOpacity } from "react-native"
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Text,
+  TextInput,
+  View,
+  RefreshControl,
+  Button,
+} from "react-native"
 
 import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
+import { IData, INavigationProps } from "../../interface/interface"
+import { NavigationProp } from "@react-navigation/native"
 
-export const Main = ({ navigation }) => {
-  const [name, setName] = useState()
+type PageName = "AboutScreen"
+
+export const Main = ({ navigation }: INavigationProps) => {
+  const [name, setName] = useState<string>()
   const [data, setData] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
@@ -15,7 +28,7 @@ export const Main = ({ navigation }) => {
     fetch("https://api.chucknorris.io/jokes/search?query=fet")
       .then((res) => res.json())
       .then((res) => setData(res.result))
-      .catch((err) => alert(err))
+      .catch((err) => Alert.alert("Ошибка с сервера", "Попробуйте выполнить запрос позднее"))
       .finally(() => setIsLoading(false))
   }
 
@@ -28,14 +41,15 @@ export const Main = ({ navigation }) => {
       <ActivityIndicator size={"large"} style={{ flex: 1, justifyContent: "center", alignItems: "center" }} />
     )
   }
+
+  const onPressHandler = (pageName: PageName) => {
+    navigation.navigate(pageName)
+  }
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Button
-          style={styles.button}
-          title="Перейти на страницу о нас"
-          onPress={() => navigation.navigate("AboutScreen")}
-        />
+        <Button title="Перейти на страницу о нас" onPress={() => onPressHandler("AboutScreen")} />
         <ActivityIndicator size={"large"} color={"wheat"} />
         <FlatList
           refreshing={isLoading}
@@ -43,11 +57,7 @@ export const Main = ({ navigation }) => {
           keyExtractor={(item) => item.id}
           data={data}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("JokeScreen", { id: item.id, title: item.created_at })}
-            >
-              <Joke text={item.value} />
-            </TouchableOpacity>
+            <Joke text={item.value} navigation={navigation} id={item.id} title={item.created_at} />
           )}
         />
         <Text style={styles.text}>Hello World!</Text>
@@ -58,9 +68,7 @@ export const Main = ({ navigation }) => {
           keyboardType={"numeric"}
         />
         <StatusBar style="auto" />
-        <Button title={"Нажми на меня"} onPress={() => console.log("test")}>
-          Нажми на меня
-        </Button>
+        <Button title="Нажми на меня" onPress={() => console.log("test")} />
       </View>
     </View>
   )
