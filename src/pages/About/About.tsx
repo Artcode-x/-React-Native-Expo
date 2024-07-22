@@ -6,9 +6,7 @@ export const About = () => {
     const container = () => {}
 
     return (
-      // SafeAreaView = чтобы контент не наезжал например на челку айфона
       <SafeAreaView style={styles.container}>
-        {/* <FlatList /> */}
         <View style={[styles.box, { flex: 2 }]}>
           <Text>About</Text>
           <Text style={styles.content}> </Text>

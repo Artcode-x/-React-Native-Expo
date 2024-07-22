@@ -14,8 +14,6 @@ import { styles } from "./Main.styles"
 import { StatusBar } from "expo-status-bar"
 import { Joke } from "./components/Joke/Joke"
 import { IData, INavigationProps } from "../../interface/interface"
-// import { NavigationParams } from "@react-navigation/native"
-
 import { NavigationProp } from "@react-navigation/native"
 
 type PageName = "AboutScreen"
@@ -43,7 +41,7 @@ export const Main = ({ navigation }: INavigationProps) => {
       <ActivityIndicator size={"large"} style={{ flex: 1, justifyContent: "center", alignItems: "center" }} />
     )
   }
-  // console.log(data)
+
   const onPressHandler = (pageName: PageName) => {
     navigation.navigate(pageName)
   }
@@ -51,24 +49,13 @@ export const Main = ({ navigation }: INavigationProps) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <Button
-          // style={styles.button}
-          title="Перейти на страницу о нас"
-          //   параметром для перехода указывается атрибут AboutScreen, который мы указали в App при роутинге = какая страница
-          onPress={() => onPressHandler("AboutScreen")}
-        />
-        {/* ActivityIndicator - индикатор загрузки */}
+        <Button title="Перейти на страницу о нас" onPress={() => onPressHandler("AboutScreen")} />
         <ActivityIndicator size={"large"} color={"wheat"} />
-        {/* Flatlist - используется для вывода контента со скроллом / Предоставляет интерфейс для вывода списков */}
-        {/* renderItem - используется аналогично методу map, пишем туда выводимые данные*/}
         <FlatList
-          // указываем флаг с пом-ю которого refreshcontrol понимает показывать или нет наши данные
           refreshing={isLoading}
-          // далее указываем что будем обновлять:
           onRefresh={fetchPromise}
           keyExtractor={(item) => item.id}
           data={data}
-          // важно указывать именно item
           renderItem={({ item }) => (
             <Joke text={item.value} navigation={navigation} id={item.id} title={item.created_at} />
           )}
