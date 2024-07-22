@@ -43,7 +43,7 @@ export const Main = ({ navigation }: INavigationProps) => {
       <ActivityIndicator size={"large"} style={{ flex: 1, justifyContent: "center", alignItems: "center" }} />
     )
   }
-  console.log(data)
+  // console.log(data)
   const onPressHandler = (pageName: PageName) => {
     navigation.navigate(pageName)
   }
@@ -68,6 +68,7 @@ export const Main = ({ navigation }: INavigationProps) => {
           onRefresh={fetchPromise}
           keyExtractor={(item) => item.id}
           data={data}
+          // важно указывать именно item
           renderItem={({ item }) => (
             <Joke text={item.value} navigation={navigation} id={item.id} title={item.created_at} />
           )}
